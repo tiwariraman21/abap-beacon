@@ -1,0 +1,17 @@
+# Core (Python 3.10 - 3.12; 3.13+/3.14 currently lack torch wheels for the optional model)
+sqlalchemy>=2.0
+pydantic>=2.0
+typer>=0.12
+rich>=13
+rank-bm25>=0.2
+numpy>=1.26
+pytest>=8
+
+# Optional: better meaning-based search (downloads ~90 MB model once, then offline)
+# sentence-transformers>=2.7
+nicegui>=2.0
+pytest-asyncio>=0.23
+# Optional, torch-free meaning search that works on Python 3.13/3.14 (downloads ~30 MB model once)
+model2vec>=0.5
+pypdf>=4.0
+python-docx>=1.1

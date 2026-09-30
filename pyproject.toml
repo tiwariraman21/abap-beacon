@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "abap-atlas"
+version = "0.15.1"
+description = "Custom-code intelligence for SAP ABAP: ingest, understand, search, assess."
+requires-python = ">=3.10"
+dependencies = [
+    "sqlalchemy>=2.0",
+    "pydantic>=2.0",
+    "typer>=0.12",
+    "rich>=13",
+    "rank-bm25>=0.2",
+    "numpy>=1.26",
+    "nicegui>=2.0",
+    "pypdf>=4.0",
+    "python-docx>=1.1",
+]
+
+[project.optional-dependencies]
+semantic = ["sentence-transformers>=2.7"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.4"]
+
+[project.scripts]
+atlas = "atlas.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["atlas*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+main_file = "atlas/ui/app.py"
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,17 @@
+{
+  "terms": [
+    "ADNOC",
+    "Axis Bank",
+    "Sakshamuat",
+    "InfraBeat"
+  ],
+  "mask_system_ids": true,
+  "mask_numbers": true,
+  "mask_org_units": false,
+  "mask_users": true,
+  "mask_org_suffix": true,
+  "mask_in_ui": true,
+  "mask_source": false,
+  "pseudonyms": true,
+  "max_source_lines_to_ai": 400
+}

@@ -1,0 +1,5 @@
+ABAP Beacon - authors and maintainers
+
+Anjali Dodani (InfraBeat, GitHub @anjalidodani1910-gif) - creator, architect and sole maintainer, 2026 -
+    All modules: ingestion, parser, search, assessments, FSD analysis, guardrails,
+    value engine, UI, tests, documentation.

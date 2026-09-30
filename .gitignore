@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+data/atlas.db*
+data/index/
+data/output/
+.pytest_cache/
+data/workspaces/
+dist/
+build/

@@ -1,0 +1,5 @@
+# Every change to ABAP Beacon requires review by the maintainer.
+# With "Require review from Code Owners" enabled on the protected main branch,
+# GitHub/GitLab refuse to merge any pull request without this approval.
+# Replace the handle below with your Git user name.
+*       @anjalidodani1910-gif

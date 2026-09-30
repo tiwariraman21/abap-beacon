@@ -1,0 +1,6 @@
+{
+  "provider": "groq",
+  "base_url": "",
+  "api_key": "<your key>",
+  "model": "llama-3.3-70b-versatile"
+}

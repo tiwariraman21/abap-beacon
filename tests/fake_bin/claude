@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Fake Claude Code CLI for tests: reads the prompt on stdin, answers deterministically.
+Set FAKE_CLAUDE_MODE=limit to simulate a usage-limit error."""
+import json, os, re, sys
+
+prompt = sys.stdin.read()
+mode = os.environ.get("FAKE_CLAUDE_MODE", "ok")
+if mode == "limit":
+    print(json.dumps({"type": "result", "is_error": True, "result": "You've hit your usage limit. Try again at 6pm."}))
+    sys.exit(1)
+
+if "=== OBJECTS ===" in prompt:
+    names = re.findall(r"^OBJECT: (\S.*)$", prompt, re.M)
+    reply = {n.strip(): {"description": f"AI description for {n.strip()}: it does business things with tables and BAPIs.",
+                         "technical_summary": "Technical summary.", "tags": ["FI", "Test Tag"], "module": "FI",
+                         "business_process": "Test process", "risks": ["hard-coded value"]} for n in names}
+    text = json.dumps(reply)
+else:
+    m = re.search(r"### \[1\] (\S+)", prompt)
+    obj = m.group(1) if m else "UNKNOWN"
+    text = f"The check is done in [{obj}:370-375] using SELECT SINGLE.\n\nSources: {obj}"
+
+print(json.dumps({"type": "result", "is_error": False, "result": text, "model": "fake-claude", "total_cost_usd": 0.0123,
+                  "usage": {"input_tokens": len(prompt) // 4, "output_tokens": len(text) // 4}, "session_id": "x"}))

@@ -1,0 +1,94 @@
+{
+  "zaif_cl_flightbooking_in": {
+    "description": "An empty proxy implementation class for inbound flight booking messages via SAP XI/PI or the Application Interface Framework. It contains no methods, attributes or logic yet, so it currently does nothing. A developer would use it as the placeholder where inbound flight booking request processing is meant to be implemented, alongside the ZAIF_II_FLIGHTBOOKING_IN interface and the SXIDAL_FBO_REQUEST_MT message type from SAP's flight demo scenario.",
+    "tags": ["AIF", "Proxy Class", "Interface", "Flight Booking", "Inbound Message", "Stub"]
+  },
+  "zaif_ii_flightbooking_in": {
+    "description": "Inbound service interface for receiving flight booking requests through SAP XI/PI or the Application Interface Framework. It defines a single method, POSTBOOKINGS_01, that accepts a SXIDAL_FBO_REQUEST_MT message (SAP's standard flight demo booking request type) and raises CX_SXIDAL_TECHNICAL_PROBLEMS on technical errors. A developer would implement this interface in a proxy class to post incoming flight bookings from an external system.",
+    "tags": ["AIF", "Interface", "Proxy", "Flight Booking", "Inbound Message", "XI/PI"]
+  },
+  "zapi_aes128_bene_reg": {
+    "description": "Test driver program for registering a vendor as a payment beneficiary with Axis Bank. It instantiates ZCL_AXIS_PAYEE_MGMT with placeholder client credentials, builds a hard-coded beneficiary record (code, name, account number, IFSC, bank, email, mobile) into a table, calls REGISTER_BENEFICIARY and issues a success or error message with COMMIT WORK. Useful as a reference for how to call the Axis Bank beneficiary registration API from ABAP.",
+    "tags": ["FI", "Test Program", "Bank Integration", "Payee Management", "Beneficiary Registration", "Axis Bank"]
+  },
+  "zcds_simple_demo1": {
+    "description": "Demonstration CDS view over sales document headers (VBAK) exposing document number, category, sales organisation, distribution channel, division and sold-to party. It shows a nested CASE expression that translates the document category into text such as Inquiry, Quotation, or Order paid/not paid based on net value, and exposes $session variables (client, system date, language, user, timezone). Commented-out code shows how to add input parameters. Useful as a CDS syntax learning example.",
+    "tags": ["SD", "CDS View", "Demo", "Sales Documents", "CASE Expression", "Session Variables"]
+  },
+  "zcl_axis_payee_mgmt": {
+    "description": "Integration class that registers vendor bank beneficiaries with Axis Bank's TXB payee-management REST API. It defines the JSON request structures (subheader, beneficiary insert list, encrypted body), stores client ID and secret, calculates an MD5 checksum, AES-encrypts the request body, serialises it via /UI2/CL_JSON, posts to the bank's UAT beneficiary-registration endpoint and parses the response status. Several helper methods (validation, serialisation) are still stubs. Use it when a payment run needs vendors registered as payees before bank transfers.",
+    "tags": ["FI", "Utility Class", "REST Integration", "Bank Integration", "Payee Management", "Encryption", "Axis Bank"]
+  },
+  "zcl_zca_applog": {
+    "description": "Reusable wrapper around SAP Application Log (SLG0/SLG1) built on the BAL_LOG_* function modules. It creates a log header from the call stack, adds single messages, BAPIRET2 tables, system messages or exception objects, saves the log to the database, displays it as a tree or standard view, and writes messages with type icons to list output. Raises ZCX_ZCA_EXCEPTION on failures. Use it whenever a program or interface needs consistent application logging.",
+    "tags": ["Cross-Application", "Utility Class", "Application Logging", "BAL", "Error Handling"]
+  },
+  "zcl_zsd_salesorder": {
+    "description": "Singleton business logic class behind the sales order creation OData service for the Salesforce (SF) integration. It takes a deep entity (ZSD_S_SO_HEADER_EXP with items, partners, schedule lines, conditions, texts), maps OData fields to BAPI structures using the ZSD_T_API_MAP001 mapping table, fills BAPISDHD1/BAPISDITM/BAPISCHDL/BAPICOND and their X-structures, splits long texts, checks whether a Salesforce reference already exists, reads TVARVC order-type ranges, updates user status via I_CHANGE_STATUS and commits with BAPI_TRANSACTION_COMMIT.",
+    "tags": ["SD", "Utility Class", "Sales Order Creation", "BAPI", "Salesforce Integration", "OData Backend", "Field Mapping"]
+  },
+  "zcl_zsd_salesorder_cre_dpc": {
+    "description": "Auto-generated SAP Gateway Data Provider base class for the ZSD_SALESORDER_CRE OData service used to create sales orders from Salesforce. It declares CRUD and GET_ENTITYSET methods for entity sets such as SO_Header, SO_Item, SO_HPartner, SO_IPartner, SO_IPrElement, SO_HText, SO_SLine, SO_Delivery and SO_Messages, all raising method-not-implemented by default. Do not modify; implement logic in the _DPC_EXT subclass.",
+    "tags": ["SD", "OData Service", "Generated Code", "DPC", "Sales Order Creation", "SAP Gateway"]
+  },
+  "zcl_zsd_salesorder_cre_dpc_ext": {
+    "description": "Data provider extension for the sales order creation OData service. It redefines CREATE_DEEP_ENTITY so that a POST on SO_Header reads the incoming deep payload (header with items, partners, schedule lines, texts) into ZSD_S_SO_HEADER_EXP and hands it to ZCL_ZSD_SALESORDER=>PROCESS_SINGLE_SO, which builds and calls the sales order BAPI. A SO_Request branch for multiple orders is prepared but commented out. Use it to create sales orders from an external system through OData.",
+    "tags": ["SD", "OData Service", "DPC Extension", "Deep Insert", "Sales Order Creation", "Salesforce Integration"]
+  },
+  "zcl_zsd_salesorder_cre_mpc": {
+    "description": "Auto-generated SAP Gateway Model Provider base class for the ZSD_SALESORDER_CRE OData service. It defines the entity types and sets for sales order creation - SO_Header, SO_Item, SO_HPartner, SO_IPartner, SO_HPrElement, SO_IPrElement, SO_HText, SO_SLine, SO_Delivery, SO_Messages, SO_Request and SO_Criteria - mapped to ZSD_S_SO_* structures, plus their associations and navigation properties. Generated on 24.05.2024; never edit directly, change the model in the _MPC_EXT subclass.",
+    "tags": ["SD", "OData Service", "Generated Code", "MPC", "Sales Order Creation", "SAP Gateway"]
+  },
+  "zcl_zsd_salesorder_cre_mpc_ext": {
+    "description": "Empty model provider extension class for the sales order creation OData service. It inherits everything from the generated ZCL_ZSD_SALESORDER_CRE_MPC and contains no redefinitions, meaning the OData model is used exactly as generated from the Service Builder. A developer would add code here only to adjust entity metadata or annotations for the Salesforce sales order service without touching the generated base class.",
+    "tags": ["SD", "OData Service", "MPC Extension", "Sales Order Creation", "SAP Gateway", "Stub"]
+  },
+  "zcx_axis_payee_mgmt": {
+    "description": "Exception class for the Axis Bank beneficiary registration integration. It inherits from CX_STATIC_CHECK, implements IF_T100_MESSAGE and IF_T100_DYN_MSG for message-class based texts, and defines one text ID, ENCRYPTION_FAILED, mapped to message ZAXIS_PAYEE 001. Raise it from ZCL_AXIS_PAYEE_MGMT when request encryption or other payee-management API steps fail, so callers can catch a typed exception with a proper T100 message.",
+    "tags": ["FI", "Exception Class", "Payee Management", "Bank Integration", "Error Handling", "Axis Bank"]
+  },
+  "zcx_zca_exception": {
+    "description": "Cross-application exception class collecting BAPIRET2 messages for later display or logging. Built on CX_STATIC_CHECK with T100 message support, it can append the current SY message, append an explicit message with variables, or generate a default error text from the calling program and include via SYSTEM_CALLSTACK. It keeps a message table, clears it, and displays the first or last message. Used by ZCL_ZCA_APPLOG and suitable for any custom program needing structured error collection.",
+    "tags": ["Cross-Application", "Exception Class", "Error Handling", "BAPIRET2", "Application Logging"]
+  },
+  "zfi_bank_api": {
+    "description": "Empty executable program shell with only a REPORT statement and no selection screen, events or logic. Based on its name it was created as a starting point for a bank API integration in Finance (likely related to the Axis Bank payee registration work), but nothing has been implemented. Do not rely on it for any functionality; it is a placeholder to be developed or deleted.",
+    "tags": ["FI", "Program", "Bank Integration", "Stub", "Placeholder"]
+  },
+  "zmm_po_doc": {
+    "description": "CDS view listing purchase order headers from EKKO restricted to standard purchase orders (document category F), exposing PO number, document category and vendor. It defines a one-to-many association to purchase order items (EKPO) named POI so consumers can navigate from header to items. Useful as a base view for purchasing reports or OData services that need PO header data with drill-down to line items.",
+    "tags": ["MM", "CDS View", "Purchase Orders", "EKKO", "EKPO", "Association"]
+  },
+  "zrfi_vendor_ageing": {
+    "description": "Main program for a vendor open item ageing report in Finance, structured with TOP, SEL and SUB includes and the SLIS type pool for ALV output. It selects vendor open items by company code, vendor, profit centre, GL account, special GL indicator, document and business area as of a key date, and buckets them into configurable ageing intervals (30/60/90/120/180 days). Use it to analyse overdue payables by vendor.",
+    "tags": ["FI", "ALV Report", "Vendor Ageing", "Accounts Payable", "Open Items", "BSIK"]
+  },
+  "zrfi_vendor_ageing_new_sel": {
+    "description": "Selection screen include for the vendor ageing ALV report. It declares select-options over BSEG, LFA1 and BSIK for company code (default AESL), vendor, profit centre, GL account, key date, special GL indicator, document number and business area; radio buttons for line item versus summary output; five configurable ageing-day thresholds (30, 60, 90, 120, 180); a basis choice for ageing (invoice date, due date, baseline date, etc.); and a download checkbox.",
+    "tags": ["FI", "Include", "Selection Screen", "Vendor Ageing", "Accounts Payable"]
+  },
+  "zrfi_vendor_ageing_new_sub": {
+    "description": "Subroutine include for the vendor ageing report, intended to hold the FORM routines that read vendor open items, calculate ageing buckets and build the ALV field catalog and output. In the visible source it contains only the header comment and no code, so the processing logic has either not been written yet or lives elsewhere. Check the main program before assuming any ageing calculation exists here.",
+    "tags": ["FI", "Include", "Subroutines", "Vendor Ageing", "Stub"]
+  },
+  "zrfi_vendor_ageing_new_top": {
+    "description": "Global declaration include for the vendor ageing report, meant to hold the data types, internal tables, ALV field catalog and layout variables shared by the selection and subroutine includes. In the source provided it contains only the header comment with no declarations, so it is currently an empty placeholder within the ZRFI_VENDOR_AGEING report structure.",
+    "tags": ["FI", "Include", "Global Declarations", "Vendor Ageing", "Stub"]
+  },
+  "zsd_date_func": {
+    "description": "Demonstration CDS view over sales orders (VBAK, category C with non-zero net value) showcasing CDS date functions. It uses DATS_IS_VALID to check a date format, DATS_DAYS_BETWEEN to compute days between order and delivery dates, DATS_ADD_DAYS to derive an expected delivery date, and DATS_ADD_MONTHS to add a month, mostly on hard-coded literal dates. Use it as a syntax reference for date arithmetic in CDS.",
+    "tags": ["SD", "CDS View", "Demo", "Date Functions", "Sales Orders"]
+  },
+  "zsd_ds_func": {
+    "description": "Demonstration CDS view over INR sales orders from VBAK showing how DECIMAL_SHIFT behaves. It outputs the original net value alongside six variants shifted according to pseudo-currency codes 0 through 5, illustrating how amounts are adjusted for currencies with different numbers of decimal places. Use it as a syntax reference when currency amount conversion or decimal handling is needed in CDS views.",
+    "tags": ["SD", "CDS View", "Demo", "Currency Conversion", "DECIMAL_SHIFT", "Sales Orders"]
+  },
+  "zsd_dt_conv": {
+    "description": "Demonstration CDS view over sales orders (VBAK) illustrating timestamp and time zone functions. It returns the current UTC timestamp, splits it into date and time with TSTMP_TO_DATS and TSTMP_TO_TIMS using the system time zone via ABAP_SYSTEM_TIMEZONE, derives the daylight saving indicator with TSTMP_TO_DST, and rebuilds a timestamp from order creation date and time using DATS_TIMS_TO_TSTMP. Use it as a syntax reference for timestamp conversion in CDS.",
+    "tags": ["SD", "CDS View", "Demo", "Timestamp Functions", "Time Zone", "Sales Orders"]
+  },
+  "zsd_t_api_map001": {
+    "description": "Auto-generated table maintenance function group (SM30) for custom table ZSD_T_API_MAP001, which holds the field mappings between OData entities and BAPI structures used by the Salesforce sales order creation service. It contains the standard TABLEFRAME and TABLEPROC function modules plus generated view-maintenance includes; no custom logic. Use it to maintain mapping entries consumed by ZCL_ZSD_SALESORDER.",
+    "tags": ["SD", "Table Maintenance", "Generated Code", "Function Group", "Field Mapping", "Sales Order Creation"]
+  }
+}

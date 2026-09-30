@@ -1,0 +1,61 @@
+ABAP Beacon (Custom Code Intelligence for SAP) v0.15.1 - clean install on Windows
+===============================================================================
+The product is called ABAP Beacon; the command line tool is still `atlas`.
+
+1. Extract this ZIP. You get one folder:  abap_atlas\
+   Move it wherever you like, e.g.  C:\Users\<you>\abap_atlas
+
+2. Open PowerShell (or VS Code terminal) IN that folder and run:
+
+       .\run.bat
+
+   First run: creates .venv, installs the package, runs the pipeline on the
+   sample export in data\input and prints the statistics.
+   (data\atlas.db is already included, so this is quick; it will report
+   "unchanged" for all 77 objects.)
+
+3. Start the web app:
+
+       .\run.bat ui              ->  http://localhost:8080
+
+4. Other commands (always through .\run.bat, never activate the venv):
+
+       .\run.bat search "salesorder interface"
+       .\run.bat assess
+       .\run.bat findings --category security
+       .\run.bat deps ZCL_ZCA_APPLOG
+       .\run.bat impact BSIK
+       .\run.bat tables
+       .\run.bat ai-status
+       .\run.bat enrich-ai --limit 10
+       .\run.bat ask "how does the sales order service check whether an order exists?"
+       .\run.bat fsd samples\fsd\FSD_03_Purchase_Order_Approval_Workflow.md
+       .\run.bat fsd my_spec.docx --ai
+
+  Upgrading from an older version: stop the UI first (Ctrl+C), then unzip the new
+  release over the folder. If a page ever shows "database disk image is malformed",
+  run  .\run.bat db-repair  (the start-up check normally does this by itself).
+
+   If PowerShell complains about run.bat, use the explicit path form:
+       .\.venv\Scripts\atlas.exe ui
+
+   Never run .\.venv\Scripts\Activate.ps1 - your execution policy blocks it
+   and it is not needed.
+
+5. Optional extras
+   - Real meaning search (Python 3.14 OK):
+         .\.venv\Scripts\python.exe -m pip install model2vec
+         .\run.bat index
+   - AI features: open the web app -> Settings -> AI provider and pick one:
+       * Ollama (free, offline): install from ollama.com, then  ollama pull llama3.1
+       * Groq / OpenRouter / Gemini / Mistral: free API key, paste it, Test, Save
+       * Claude Code: npm install -g @anthropic-ai/claude-code ; run `claude` once to log in
+     Check with  .\run.bat ai-status
+   - Guardrails: Settings -> Guardrails lists the customer/system names that are
+     masked everywhere; add your customers there before the first AI run.
+
+6. Your own exports: drop an abapGit ZIP into data\input\ and run
+       .\run.bat run data\input\<file>.zip --system DEV --package <ROOTPKG>
+   or upload it on the Jobs page in the web app.
+
+Tests (optional):  .\.venv\Scripts\python.exe -m pytest -q
