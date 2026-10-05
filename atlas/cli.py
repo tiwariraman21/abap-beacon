@@ -803,7 +803,7 @@ def guard_add(terms: list[str] = typer.Argument(..., help="Customer / project / 
 
 @app.command()
 def ui(
-    port: int = typer.Option(8080, "--port"),
+    port: int = typer.Option(int(os.environ.get("PORT", "8080")), "--port"),
     no_browser: bool = typer.Option(False, "--no-browser", help="Do not open the browser automatically"),
 ) -> None:
     """Start the web app (NiceGUI) at http://localhost:<port>."""
